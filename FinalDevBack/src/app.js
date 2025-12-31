@@ -9,7 +9,7 @@ const http = require("http");
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://devconnect-fullstack-2zvr.onrender.com",
     credentials: true,
   })
 );
