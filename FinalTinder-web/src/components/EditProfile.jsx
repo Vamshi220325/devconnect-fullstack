@@ -23,7 +23,7 @@ const EditProfile = ({ user }) => {
     setError("");
     try {
       const res = await axiosInstance.post(
-        BASE_URL + "/profile/edit",
+        "/profile/edit",
         {
           firstName,
           lastName,
