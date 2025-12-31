@@ -28,6 +28,15 @@ app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
+///
+app.get("/whoami", (req, res) => {
+  res.json({
+    cookies: req.cookies,
+    headers: req.headers.cookie || null,
+  });
+});
+
+///
 
 
 
