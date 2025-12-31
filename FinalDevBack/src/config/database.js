@@ -1,16 +1,14 @@
-const mongoose=require("mongoose");
+const mongoose = require("mongoose");
 
-// Inside database.js
 const connectDB = async () => {
-  await mongoose.connect(process.env.MONGO_URI); 
+  try {
+    // This looks for the variable you will create in Render
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB connected successfully to the cloud!");
+  } catch (error) {
+    console.error("MongoDB connection failed:", error.message);
+    process.exit(1); // Stop the server if the database fails
+  }
 };
-//mongodb+srv://Vamshi123:<db_password>@cluster0.qkwvz.mongodb.net/
-module.exports=connectDB;
-// connectDB()
-// .then(()=>{
-//     console.log("connected successfully");
-// })
-// .catch((err)=>{
-//     console.log("error is occured that is",err);
-// });
-//IdtNttryDRxVESOH
+
+module.exports = connectDB;
