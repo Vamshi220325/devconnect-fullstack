@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axiosInstance from "../utils/axios";
 import UserCard from "./UserCard";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
@@ -21,7 +22,7 @@ const EditProfile = ({ user }) => {
     //Clear Errors
     setError("");
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         BASE_URL + "/profile/edit",
         {
           firstName,
