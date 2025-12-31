@@ -11,7 +11,7 @@ const http = require("http");
 app.use(
   cors({
     origin: [
-      "https://devconnect-fullstack-2zvr.onrender.com", 
+      "https://devconnect-frontend-szej.onrender.com/",
       "http://localhost:5173",                         
       "http://localhost:3000"                          
     ],
