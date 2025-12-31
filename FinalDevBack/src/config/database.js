@@ -1,8 +1,8 @@
 const mongoose=require("mongoose");
 
-const connectDB=async ()=>{
-    await mongoose.connect("mongodb+srv://Vamshi123:9lxhOboJK5YAu7I2@cluster0.qkwvz.mongodb.net/devConnect");
-    
+// Inside database.js
+const connectDB = async () => {
+  await mongoose.connect(process.env.MONGO_URI); 
 };
 //mongodb+srv://Vamshi123:<db_password>@cluster0.qkwvz.mongodb.net/
 module.exports=connectDB;
