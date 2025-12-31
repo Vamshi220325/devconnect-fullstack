@@ -8,16 +8,10 @@ const http = require("http");
 
 
 
-app.use(
-  cors({
-    origin: [
-      "https://devconnect-frontend-szej.onrender.com/",
-      "http://localhost:5173",                         
-      "http://localhost:3000"                          
-    ],
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: "https://devconnect-frontend-szej.onrender.com", 
+  credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 
