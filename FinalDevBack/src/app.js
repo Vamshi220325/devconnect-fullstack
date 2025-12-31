@@ -1,21 +1,23 @@
 const express = require("express");
 const connectDB = require("./config/database");
 const app = express();
+
+app.set("trust proxy", 1); // 🔥 MUST HAVE
+
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const http = require("http");
 
+app.use(
+  cors({
+    origin: "https://devconnect-frontend-szej.onrender.com",
+    credentials: true,
+  })
+);
 
-
-
-app.use(cors({
-  origin: "https://devconnect-frontend-szej.onrender.com",
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
 app.use(express.json());
 app.use(cookieParser());
+
 
 const authRouter = require("./routes/auth");
 const profileRouter = require("./routes/profile");
