@@ -9,7 +9,7 @@ const http = require("http");
 
 
 app.use(cors({
-  origin: "https://devconnect-frontend-szej.onrender.com/",
+  origin: "https://devconnect-frontend-szej.onrender.com",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
