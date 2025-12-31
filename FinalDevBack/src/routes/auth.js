@@ -5,18 +5,15 @@ const { validateSignUpData } = require("../utils/validation");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
+// ================== SIGNUP ==================
 authRouter.post("/signup", async (req, res) => {
   try {
-    // Validation of data
     validateSignUpData(req);
 
     const { firstName, lastName, emailId, password } = req.body;
 
-    // Encrypt the password
     const passwordHash = await bcrypt.hash(password, 10);
-    console.log(passwordHash);
 
-    //   Creating a new instance of the User model
     const user = new User({
       firstName,
       lastName,
@@ -25,54 +22,54 @@ authRouter.post("/signup", async (req, res) => {
     });
 
     const savedUser = await user.save();
+
+    // 🔥 Generate JWT
     const token = await savedUser.getJWT();
 
-    res.cookie("token", token, {
-      expires: new Date(Date.now() + 8 * 3600000),
-      httpOnly: true,    
-    secure: true,
-      sameSite: "none",
+    // ✅ RETURN TOKEN (NO COOKIES)
+    res.status(201).json({
+      message: "User Added successfully!",
+      token,
+      user: savedUser,
     });
-
-    res.json({ message: "User Added successfully!", data: savedUser });
   } catch (err) {
-    res.status(400).send("ERROR : " + err.message);
+    res.status(400).json({ error: err.message });
   }
 });
 
+// ================== LOGIN ==================
 authRouter.post("/login", async (req, res) => {
   try {
     const { emailId, password } = req.body;
 
-    const user = await User.findOne({ emailId: emailId });
+    const user = await User.findOne({ emailId });
     if (!user) {
-      throw new Error("Invalid credentials");
+      return res.status(401).json({ error: "Invalid credentials" });
     }
+
     const isPasswordValid = await user.validatePassword(password);
-
-    if (isPasswordValid) {
-      const token = await user.getJWT();
-
-      res.cookie("token", token, {
-        expires: new Date(Date.now() + 8 * 3600000),
-        httpOnly: true,    
-    secure: true,
-        sameSite: "none",
-      });
-      res.send(user);
-    } else {
-      throw new Error("Invalid credentials");
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: "Invalid credentials" });
     }
+
+    // 🔥 Generate JWT
+    const token = await user.getJWT();
+
+    // ✅ RETURN TOKEN (NO COOKIES)
+    res.status(200).json({
+      token,
+      user,
+    });
   } catch (err) {
-    res.status(400).send("ERROR : " + err.message);
+    res.status(400).json({ error: err.message });
   }
 });
 
-authRouter.post("/logout", async (req, res) => {
-  res.cookie("token", null, {
-    expires: new Date(Date.now()),
-  });
-  res.send("Logout Successful!!");
+// ================== LOGOUT ==================
+// Frontend will handle logout by deleting token
+authRouter.post("/logout", (req, res) => {
+  res.json({ message: "Logout successful" });
 });
 
 module.exports = authRouter;
+
