@@ -12,7 +12,7 @@ const Requests = () => {
   const reviewRequest = async (status, _id) => {
     try {
       const res = await axiosInstance.post(
-        BASE_URL + "/request/review/" + status + "/" + _id,
+      "/request/review/" + status + "/" + _id,
         {},
         { withCredentials: true }
       );
@@ -22,7 +22,7 @@ const Requests = () => {
 
   const fetchRequests = async () => {
     try {
-      const res = await axiosInstance.get(BASE_URL + "/user/requests/received", {
+      const res = await axiosInstance.get("/user/requests/received", {
         withCredentials: true,
       });
 
