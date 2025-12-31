@@ -3,24 +3,28 @@ const User = require("../models/user");
 
 const userAuth = async (req, res, next) => {
   try {
-    const { token } = req.cookies;
-    if (!token) {
+    // ✅ Read token from Authorization header
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).send("Please Login!");
     }
 
-    const decodedObj = await jwt.verify(token, "DEV@Tinder$790");
+    const token = authHeader.split(" ")[1];
 
-    const { _id } = decodedObj;
+    // ✅ Verify JWT
+    const decodedObj = jwt.verify(token, "DEV@Tinder$790");
 
-    const user = await User.findById(_id);
+    const user = await User.findById(decodedObj._id);
+
     if (!user) {
-      throw new Error("User not found");
+      return res.status(401).send("User not found");
     }
 
     req.user = user;
     next();
   } catch (err) {
-    res.status(400).send("ERROR: " + err.message);
+    return res.status(401).send("Please Login!");
   }
 };
 
