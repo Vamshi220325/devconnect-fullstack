@@ -18,8 +18,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res =await axiosInstance.post(
-        BASE_URL + "/login",
+      const res =await axiosInstance.post("/login",
         {
           emailId,
           password,
@@ -35,8 +34,7 @@ const Login = () => {
 
   const handleSignUp = async () => {
     try {
-      const res = await axiosInstance.post(
-        BASE_URL + "/signup",
+      const res = await axiosInstance.post("/signup",
         { firstName, lastName, emailId, password },
         { withCredentials: true }
       );
