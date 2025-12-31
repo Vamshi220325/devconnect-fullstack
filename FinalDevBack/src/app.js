@@ -32,12 +32,12 @@ app.use("/", userRouter);
 
 const server = http.createServer(app);
 
-
+const PORT = process.env.PORT || 3001;
 connectDB()
   .then(() => {
     console.log("Database connection established...");
-    server.listen(3001, () => {
-      console.log("Server is successfully listening on port 3001...");
+    server.listen(PORT, () => {
+      console.log("Server is successfully listening on port ${PORT}...");
     });
   })
   .catch((err) => {
