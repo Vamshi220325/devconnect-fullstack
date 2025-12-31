@@ -11,9 +11,9 @@ const http = require("http");
 app.use(
   cors({
     origin: [
-      "https://devconnect-fullstack-2zvr.onrender.com", // Your live frontend URL
-      "http://localhost:5173",                         // Standard Vite local port
-      "http://localhost:3000"                          // Standard React local port
+      "https://devconnect-fullstack-2zvr.onrender.com", 
+      "http://localhost:5173",                         
+      "http://localhost:3000"                          
     ],
     credentials: true,
   })
