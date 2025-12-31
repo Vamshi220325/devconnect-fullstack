@@ -1,3 +1,7 @@
+import axios from "axios";
+
+// This tells Axios to include cookies (the token) in every single request
+axios.defaults.withCredentials = true;
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Body from "./components/Body";
 import Login from "./components/Login";
